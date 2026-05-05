@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { storyStages, getLegendTitle, getLegendSummary } from './data/storyData';
+import { storyStages, getLegendData } from './data/storyData';
 import AntiGravityCard from './components/AntiGravityCard';
 import ChoiceOrb from './components/ChoiceOrb';
 import DestinyOverlay from './components/DestinyOverlay';
@@ -167,7 +167,7 @@ export default function App() {
                         className="text-5xl md:text-7xl font-serif mb-8 drop-shadow-lg"
                         style={{ color: accentColor, textShadow: `0 0 20px ${accentColor}80` }}
                       >
-                        {getLegendTitle(divergence, history)}
+                        {getLegendData(divergence, history).title}
                       </h1>
                     </motion.div>
                     
@@ -177,7 +177,7 @@ export default function App() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1.5, duration: 1 }}
                     >
-                      {getLegendSummary(divergence, history)}
+                      {getLegendData(divergence, history).summary}
                     </motion.p>
                     
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -237,7 +237,13 @@ export default function App() {
                       ))}
                     </div>
                     
-                    <div className="text-center">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                      <button
+                        onClick={() => setShowRecap(false)}
+                        className="px-8 py-3 rounded-full bg-slate-900/5 dark:bg-white/10 hover:bg-slate-900/10 dark:hover:bg-white/20 transition-colors uppercase tracking-widest text-sm"
+                      >
+                        Back to Legend
+                      </button>
                       <button
                         onClick={handleRestart}
                         className="px-8 py-3 rounded-full border border-slate-300 dark:border-white/20 hover:bg-slate-900/5 dark:hover:bg-white/10 transition-colors uppercase tracking-widest text-sm"

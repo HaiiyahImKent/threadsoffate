@@ -231,63 +231,133 @@ export const storyStages = [
   }
 ];
 
-export const getLegendTitle = (divergence, history) => {
-  if (divergence === 0) return "The True Alchemist";
-  
-  const typeCounts = history.reduce((acc, choice) => {
-    acc[choice.type] = (acc[choice.type] || 0) + 1;
-    return acc;
-  }, {});
-
-  let maxType = "";
-  let maxCount = 0;
-  
-  for (const [type, count] of Object.entries(typeCounts)) {
-    if (count > maxCount && type !== "Destiny" && type !== "Reveal") {
-      maxCount = count;
-      maxType = type;
-    }
-  }
-
-  switch(maxType) {
-    case "Ambition": return "The Merchant King";
-    case "Love": return "The Oasis Heart";
-    case "Fear": return "The Cautious Wanderer";
-    case "Wisdom": return "The Desert Scholar";
-    default: return "The Divergent Traveler";
+const endingsMap = {
+  // Pure paths
+  "Destiny_Destiny": {
+    title: "The True Alchemist",
+    summary: "You followed the Omens meticulously, never straying from the Soul of the World. Like Santiago, you learned the Language of the World, understood the desert, and turned yourself into the wind. In the end, you realized the treasure was exactly where you started, but it was the journey that gave you the eyes to see it."
+  },
+  "Ambition_Ambition": {
+    title: "The Merchant King",
+    summary: "Your thirst for greatness overshadowed the Omens. You amassed wealth, fleets, and power, dominating trade routes across the Mediterranean. While the Pyramids remain a distant dream, you built an empire of your own. Yet, on quiet nights, the desert wind still whispers of a destiny left unfulfilled."
+  },
+  "Love_Love": {
+    title: "The Oasis Heart",
+    summary: "You chose matters of the heart over the pursuit of the unknown. You found comfort in the arms of the one you loved, becoming a respected pillar of your community. Your Personal Legend shifted from finding a buried treasure to nurturing a life built on love. You are happy, though the Omens have long since gone silent."
+  },
+  "Fear_Fear": {
+    title: "The Cautious Wanderer",
+    summary: "The vastness of the world and the danger of the desert paralyzed your journey. You sought safety in the familiar, refusing to take the leaps of faith required by the Soul of the World. You survived, but you lived a life of 'what ifs', never discovering the magic that lay just beyond your comfort zone."
+  },
+  "Wisdom_Wisdom": {
+    title: "The Desert Scholar",
+    summary: "You treated the journey as a puzzle to be solved rather than a path to be walked. You accumulated immense knowledge, studying ancient texts and mastering the strategies of the desert. You became a revered scholar and counselor. You learned everything about the Pyramids, except what it felt like to touch their stones."
+  },
+  // Ambition primary
+  "Ambition_Love": {
+    title: "The Wealthy Suitor",
+    summary: "Driven by a desire for both power and affection, you built a fortune to secure the love you found along the way. Your wealth protects your heart, but you often wonder if love alone would have been enough without the gold to shield it."
+  },
+  "Ambition_Wisdom": {
+    title: "The Master of Coin",
+    summary: "Your sharp intellect served your endless ambition. You studied the markets, the wars, and the people, using every piece of knowledge to expand your influence. You became impossibly rich, trading the mysteries of the universe for the tangible weight of gold."
+  },
+  "Ambition_Fear": {
+    title: "The Hoarder",
+    summary: "Your ambition was driven not by a desire to grow, but by a profound terror of losing what you had. You amassed wealth and immediately locked it away, building walls around yourself. You are safe and rich, but entirely trapped in a prison of your own making."
+  },
+  "Ambition_Destiny": {
+    title: "The Powerful Visionary",
+    summary: "You heard the call of the Omens, but you bent them to serve your own rise to power. You achieved your Personal Legend, but you did so as a conqueror rather than a humble traveler. The universe yielded to you, recognizing your unrelenting will."
+  },
+  // Love primary
+  "Love_Ambition": {
+    title: "The Oasis Sovereign",
+    summary: "Love anchored you, but your ambition could not be completely silenced. You stayed for the heart, but quickly rose to lead your new community, turning a simple life into a local dynasty. You found a kingdom in the sand, built entirely around the one you love."
+  },
+  "Love_Wisdom": {
+    title: "The Sage of Hearts",
+    summary: "You prioritized connection, but approached it with deep understanding and empathy. You became a legendary counselor, healing the emotional wounds of travelers who crossed the desert. You never reached the Pyramids, but you helped hundreds of others find their way."
+  },
+  "Love_Fear": {
+    title: "The Sheltered Lover",
+    summary: "You clung to love tightly, terrified of the dangers that lay beyond the dunes. Your affection became a shield against the frightening unknown. You lived a peaceful, quiet life, though you never let your partner look too long at the horizon."
+  },
+  "Love_Destiny": {
+    title: "The Devoted Pilgrim",
+    summary: "You followed the Omens, but your journey was entirely fueled by the connections you made. You recognized that the true Soul of the World is love itself. You reached your destination, not as a solitary seeker, but carrying the hearts of those you met along the way."
+  },
+  // Wisdom Primary
+  "Wisdom_Ambition": {
+    title: "The Strategic Architect",
+    summary: "You viewed the world as a chessboard. Your deep understanding of ancient texts and human nature allowed you to maneuver yourself into positions of incredible influence. You never found the treasure, but you wrote the maps that future kings would use."
+  },
+  "Wisdom_Love": {
+    title: "The Compassionate Guide",
+    summary: "Your pursuit of knowledge was softened by a deep love for humanity. You abandoned the solitary quest for the Pyramids to stay and teach, becoming a beacon of light in the desert. The treasure you found was the legacy of wisdom you left behind."
+  },
+  "Wisdom_Fear": {
+    title: "The Paralyzed Thinker",
+    summary: "You learned so much about the world that you became terrified of its complexities. Knowing every possible danger, you calculated that the safest move was not to move at all. You died a genius, but a genius who never truly lived."
+  },
+  "Wisdom_Destiny": {
+    title: "The Enlightened Seeker",
+    summary: "You did not just follow the Omens blindly; you studied them, decoding the very Language of the World. Your journey to the Pyramids was slow and deliberate. When you finally arrived, you understood not just where the treasure was, but exactly why the universe put it there."
+  },
+  // Fear Primary
+  "Fear_Ambition": {
+    title: "The Paranoid Ruler",
+    summary: "Terrified of being a victim, you aggressively seized power to protect yourself. You strike before you can be struck, hoarding influence out of sheer terror. You are the most powerful person in the oasis, and the most miserable."
+  },
+  "Fear_Love": {
+    title: "The Clinging Soul",
+    summary: "Fear of the journey drove you into the arms of the first person who offered safety. You mistook sanctuary for love, clinging to them to avoid facing the desert. It is a quiet life, but one shadowed by the constant dread of the unknown."
+  },
+  "Fear_Wisdom": {
+    title: "The Anxious Scholar",
+    summary: "You used studying as an excuse to avoid acting. You read every book about the Pyramids, mapping routes and analyzing tribal wars, constantly claiming you needed 'just a bit more preparation'. The years slipped by while you hid behind your scrolls."
+  },
+  "Fear_Destiny": {
+    title: "The Reluctant Hero",
+    summary: "You were terrified every single step of the way, constantly doubting the Omens and wanting to turn back. Yet, somehow, the universe dragged you kicking and screaming to your Personal Legend. You found the treasure, trembling as you dug it out of the sand."
+  },
+  // Destiny Primary
+  "Destiny_Ambition": {
+    title: "The Driven Chosen",
+    summary: "You followed the Omens, but with a fierce, competitive fire. You saw your Personal Legend not just as a spiritual journey, but as a prize to be won. You claimed the treasure of the Pyramids with a conqueror's pride, proving your greatness to the world."
+  },
+  "Destiny_Love": {
+    title: "The Romantic Traveler",
+    summary: "You pursued your destiny, but you let love be your compass. Every step toward the Pyramids was guided by the heart. When you finally found the treasure, your first thought was not of the gold, but of returning to the oasis to share it."
+  },
+  "Destiny_Fear": {
+    title: "The Hesitant Prophet",
+    summary: "You stayed on the path of your Personal Legend, but you walked it with immense caution. You second-guessed every Omen, tiptoeing through the desert. You achieved your destiny, proving that courage isn't the absence of fear, but walking forward despite it."
+  },
+  "Destiny_Wisdom": {
+    title: "The Wise Wanderer",
+    summary: "You walked the path of the Omens with the eyes of a philosopher. You didn't just experience the journey; you sought to understand the mechanics of fate itself. You found the physical treasure, but the spiritual enlightenment you gained was far more valuable."
   }
 };
 
-export const getLegendSummary = (divergence, history) => {
-  if (divergence === 0) {
-    return "You followed the Omens meticulously, never straying from the Soul of the World. Like Santiago, you learned the Language of the World, understood the desert, and turned yourself into the wind. In the end, you realized the treasure was exactly where you started, but it was the journey that gave you the eyes to see it.";
-  }
-
-  const typeCounts = history.reduce((acc, choice) => {
-    acc[choice.type] = (acc[choice.type] || 0) + 1;
-    return acc;
-  }, {});
-
-  let maxType = "";
-  let maxCount = 0;
+export const getLegendData = (divergence, history) => {
+  const counts = { Destiny: 0, Ambition: 0, Love: 0, Fear: 0, Wisdom: 0 };
   
-  for (const [type, count] of Object.entries(typeCounts)) {
-    if (count > maxCount && type !== "Destiny" && type !== "Reveal") {
-      maxCount = count;
-      maxType = type;
+  history.forEach(choice => {
+    if (counts[choice.type] !== undefined) {
+      counts[choice.type]++;
     }
+  });
+
+  const sortedTraits = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  
+  let primary = sortedTraits[0][0];
+  let secondary = sortedTraits[1][0];
+  
+  if (sortedTraits[0][1] >= 4 || sortedTraits[1][1] === 0) {
+    secondary = primary;
   }
 
-  switch(maxType) {
-    case "Ambition": 
-      return "Your thirst for greatness overshadowed the Omens. You amassed wealth, fleets, and power, dominating trade routes across the Mediterranean. While the Pyramids remain a distant dream, you built an empire of your own. Yet, on quiet nights, the desert wind still whispers of a destiny left unfulfilled.";
-    case "Love": 
-      return "You chose matters of the heart over the pursuit of the unknown. You found comfort in the arms of the one you loved, becoming a respected pillar of your community. Your Personal Legend shifted from finding a buried treasure to nurturing a life built on love. You are happy, though the Omens have long since gone silent.";
-    case "Fear": 
-      return "The vastness of the world and the danger of the desert paralyzed your journey. You sought safety in the familiar, refusing to take the leaps of faith required by the Soul of the World. You survived, but you lived a life of 'what ifs', never discovering the magic that lay just beyond your comfort zone.";
-    case "Wisdom": 
-      return "You treated the journey as a puzzle to be solved rather than a path to be walked. You accumulated immense knowledge, studying ancient texts and mastering the strategies of the desert. You became a revered scholar and counselor. You learned everything about the Pyramids, except what it felt like to touch their stones.";
-    default: 
-      return "Your path was scattered, pulled in different directions by fleeting desires, fears, and moments of bravery. You neither fully committed to the Omens nor completely abandoned them. Your journey was uniquely chaotic, leaving you with a patchwork of wild memories and half-finished dreams.";
-  }
+  const combinationKey = `${primary}_${secondary}`;
+  return endingsMap[combinationKey] || endingsMap["Destiny_Destiny"];
 };
