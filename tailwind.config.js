@@ -1,0 +1,37 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class', // For dark/light toggle
+  theme: {
+    extend: {
+      colors: {
+        'fate-gold': '#D4AF37',
+        'ethereal-purple': '#9333EA', // purple-600
+        'midnight-blue': '#0F172A',
+        'desert-sand': '#451A03',
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        'pulse-glow': {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: .5 },
+        }
+      }
+    },
+  },
+  plugins: [],
+}
