@@ -24,14 +24,16 @@ export const storyStages = [
         text: "Stay with the merchant's daughter you met last year and settle down.",
         isOriginal: false,
         type: "Love",
-        points: 1
+        points: 1,
+        isFatal: "MerchantDaughter"
       },
       {
         id: "exp_4",
         text: "Fear the vast unknown and decide never to sleep in the ruined church again.",
         isOriginal: false,
         type: "Fear",
-        points: 1
+        points: 1,
+        isFatal: "FearChurch"
       },
       {
         id: "exp_5",
@@ -74,14 +76,16 @@ export const storyStages = [
         text: "Stay in Tangier forever; it's safe, you are wealthy, and the desert is too dangerous.",
         isOriginal: false,
         type: "Fear",
-        points: 1
+        points: 1,
+        isFatal: "TangierFear"
       },
       {
         id: "ris_5",
         text: "Fall in love with a local artisan and build a crystal empire together.",
         isOriginal: false,
         type: "Love",
-        points: 1
+        points: 1,
+        isFatal: "TangierLove"
       }
     ]
   },
@@ -103,14 +107,16 @@ export const storyStages = [
         text: "Flee the oasis under the cover of darkness to save yourself from the war.",
         isOriginal: false,
         type: "Fear",
-        points: 1
+        points: 1,
+        isFatal: "OasisFlee"
       },
       {
         id: "cli_3",
         text: "Abandon your Personal Legend to marry Fatima and become an oasis counselor.",
         isOriginal: false,
         type: "Love",
-        points: 1
+        points: 1,
+        isFatal: "OasisFatima"
       },
       {
         id: "cli_4",
@@ -146,7 +152,8 @@ export const storyStages = [
         text: "Beg the Alchemist to use his magic to save you both, admitting you know nothing.",
         isOriginal: false,
         type: "Fear",
-        points: 1
+        points: 1,
+        isFatal: "AlchemistBeg"
       },
       {
         id: "fal_3",
@@ -160,7 +167,8 @@ export const storyStages = [
         text: "Surrender to death, finding peace in the memory of Fatima's smile.",
         isOriginal: false,
         type: "Love",
-        points: 1
+        points: 1,
+        isFatal: "AlchemistDeath"
       },
       {
         id: "fal_5",
@@ -189,7 +197,8 @@ export const storyStages = [
         text: "Give in to despair and die in the shadow of the pyramids, your journey a failure.",
         isOriginal: false,
         type: "Fear",
-        points: 1
+        points: 1,
+        isFatal: "PyramidDeath"
       },
       {
         id: "res_3",
@@ -203,7 +212,8 @@ export const storyStages = [
         text: "Forget the treasure entirely and walk back to the oasis to find Fatima.",
         isOriginal: false,
         type: "Love",
-        points: 1
+        points: 1,
+        isFatal: "PyramidGiveUp"
       },
       {
         id: "res_5",
@@ -217,11 +227,54 @@ export const storyStages = [
   {
     id: 6,
     stage: "Denouement",
-    title: "The Journey's End",
-    description: "Your journey comes to a close. The choices you've made have woven a unique tapestry of fate. It is time to uncover your Personal Legend Summary.",
+    title: "The Return to the Sycamore",
+    description: "You have traveled all the way back to Andalusia, standing once again in the ruined church where your journey began. Underneath the sycamore roots, you dig and find a chest overflowing with old Spanish gold coins and precious stones. Your Personal Legend is physically fulfilled, but the question remains: what will you do with this newfound treasure and knowledge?",
     choices: [
       {
         id: "den_1",
+        text: "Keep a small share for travel, and return to the Al-Fayoum oasis to be with Fatima forever.",
+        isOriginal: true,
+        type: "Destiny",
+        points: 0
+      },
+      {
+        id: "den_2",
+        text: "Use the gold to buy the surrounding lands and become a powerful lord in Andalusia.",
+        isOriginal: false,
+        type: "Ambition",
+        points: 1
+      },
+      {
+        id: "den_3",
+        text: "Take the chest and build a massive estate to shower your loved ones with endless luxury.",
+        isOriginal: false,
+        type: "Love",
+        points: 1
+      },
+      {
+        id: "den_4",
+        text: "Bury most of the gold back where you found it, hiding it so no thieves ever target you.",
+        isOriginal: false,
+        type: "Fear",
+        points: 1
+      },
+      {
+        id: "den_5",
+        text: "Build a library and sanctuary over the church to teach others the Language of the World.",
+        isOriginal: false,
+        type: "Wisdom",
+        points: 1
+      }
+    ]
+  },
+  {
+    id: 7,
+    stage: "Epilogue",
+    title: "The Journey's End",
+    description: "Your path is complete. The choices you've made have woven a unique tapestry of fate. It is time to uncover your Personal Legend Summary.",
+    choices: [
+      {
+        id: "epi_1",
         text: "Reveal my destiny.",
         isOriginal: true,
         type: "Reveal",
@@ -340,7 +393,67 @@ const endingsMap = {
   }
 };
 
+export const fatalEndingsMap = {
+  "MerchantDaughter": {
+    title: "The Lovers (Andalusia)",
+    summary: "You abandoned the dream of the Pyramids before the journey even began. Settling down with the merchant's daughter, you live a simple, predictable life as a shepherd. It is comfortable, but every time you look at the stars, a pang of regret whispers of the treasure you never sought.",
+    image: "/tarot/tarot_lovers.png"
+  },
+  "FearChurch": {
+    title: "The Tower (Ignorance)",
+    summary: "Terrified by the vastness of your dream, you fled from the Omens. You refused to sleep in the ruined church again, severing your connection to the Soul of the World. You lived a safe life, forever blind to the magic that surrounds you.",
+    image: "/tarot/tarot_tower.png"
+  },
+  "TangierFear": {
+    title: "The Tower (Stagnation)",
+    summary: "Africa broke your spirit. Having gained back your wealth, the fear of the unknown kept you anchored in Tangier. You became a rich crystal merchant, but your heart grew as brittle as the glass you sold, knowing you abandoned your Personal Legend.",
+    image: "/tarot/tarot_tower.png"
+  },
+  "TangierLove": {
+    title: "The Lovers (Tangier)",
+    summary: "The vibrant streets of Tangier offered you a different kind of treasure: love. You built a crystal empire alongside your partner. You found happiness, but the distant sands of the Sahara still occasionally call to a destiny left unfulfilled.",
+    image: "/tarot/tarot_lovers.png"
+  },
+  "OasisFlee": {
+    title: "The Hanged Man (Cowardice)",
+    summary: "When the tribal wars threatened the oasis, panic consumed you. Fleeing alone into the deep desert at night, you quickly lost your way. The harsh elements claimed you before morning, your journey ending in fear and isolation.",
+    image: "/tarot/tarot_death.png"
+  },
+  "OasisFatima": {
+    title: "The Lovers (Al-Fayoum)",
+    summary: "The pull of the heart was stronger than the call of the Pyramids. You abandoned your grand destiny to marry Fatima. It is a beautiful and peaceful life in the oasis, yet the Alchemist's words linger: love should never keep a man from his Personal Legend.",
+    image: "/tarot/tarot_lovers.png"
+  },
+  "AlchemistBeg": {
+    title: "The Hanged Man (Doubt)",
+    summary: "Faced with the impossible task of turning yourself into the wind, your faith shattered. You begged for your life, proving you had not learned the Language of the World. The tribal chief showed no mercy to a false sorcerer.",
+    image: "/tarot/tarot_death.png"
+  },
+  "AlchemistDeath": {
+    title: "The Hanged Man (Surrender)",
+    summary: "Instead of communing with the desert, you surrendered to despair. You died with the memory of Fatima's smile, finding peace in defeat, but failing the ultimate test of the Soul of the World.",
+    image: "/tarot/tarot_death.png"
+  },
+  "PyramidDeath": {
+    title: "The Hanged Man (Despair)",
+    summary: "You made it to the Pyramids, only to be beaten and robbed. In that crucial moment, you gave up. You died in the shadow of your greatest dream, missing the vital revelation that the treasure was back where you started.",
+    image: "/tarot/tarot_death.png"
+  },
+  "PyramidGiveUp": {
+    title: "The Lovers (Resignation)",
+    summary: "Robbed and broken at the Pyramids, you ignored the leader's dream. You chose to walk away from the treasure entirely, returning to Fatima. You found love, but you will never know the complete triumph of realizing your Personal Legend.",
+    image: "/tarot/tarot_lovers.png"
+  }
+};
+
 export const getLegendData = (divergence, history) => {
+  if (history.length > 0) {
+    const lastChoice = history[history.length - 1];
+    if (lastChoice.isFatal) {
+      return fatalEndingsMap[lastChoice.isFatal];
+    }
+  }
+
   const counts = { Destiny: 0, Ambition: 0, Love: 0, Fear: 0, Wisdom: 0 };
   
   history.forEach(choice => {
@@ -359,5 +472,40 @@ export const getLegendData = (divergence, history) => {
   }
 
   const combinationKey = `${primary}_${secondary}`;
-  return endingsMap[combinationKey] || endingsMap["Destiny_Destiny"];
+  const legend = endingsMap[combinationKey] || endingsMap["Destiny_Destiny"];
+  
+  // Dynamic Timeline Generation
+  let journeyDetails = "";
+  const dev = history.filter(c => !c.isOriginal && c.type !== "Reveal");
+  
+  if (dev.length === 0) {
+    journeyDetails = "Your footsteps perfectly mirrored the legendary journey of Santiago. You walked the pure path of the Omens without a single hesitation or doubt.";
+  } else if (dev.length === 1) {
+    const devIdx = history.findIndex(c => !c.isOriginal && c.type !== "Reveal");
+    const stageName = storyStages[devIdx]?.title || "your journey";
+    journeyDetails = `You stayed true to the Omens for almost the entire path, except during the chapter of '${stageName}', where the allure of ${dev[0].type} momentarily pulled you away. That single pivot uniquely shaped your final treasure.`;
+  } else {
+    const firstDevIdx = history.findIndex(c => !c.isOriginal && c.type !== "Reveal");
+    const lastDevIdx = history.findLastIndex(c => !c.isOriginal && c.type !== "Reveal");
+    
+    const firstStage = storyStages[firstDevIdx]?.title || "the beginning";
+    const lastStage = storyStages[lastDevIdx]?.title || "the end";
+    
+    if (firstDevIdx === lastDevIdx) {
+       journeyDetails = `You wrestled with the Omens throughout your journey. Your defining divergence occurred during '${firstStage}' driven by ${history[firstDevIdx].type}, setting off a chain reaction that made your Personal Legend entirely your own.`;
+    } else {
+       journeyDetails = `Your path was a beautiful contradiction. You first drifted from the Omens during '${firstStage}' due to ${history[firstDevIdx].type}, and your final notable deviation occurred at '${lastStage}'. You didn't just walk the path; you actively wrestled with your destiny.`;
+    }
+  }
+
+  let finalImage = `/tarot/tarot_${primary.toLowerCase()}.png`;
+  if (combinationKey === "Destiny_Destiny" && dev.length === 0) {
+    finalImage = `/tarot/tarot_alchemist.png`;
+  }
+
+  return {
+    ...legend,
+    summary: `${legend.summary}\n\n${journeyDetails}`,
+    image: finalImage
+  };
 };

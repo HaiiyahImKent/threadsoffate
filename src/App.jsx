@@ -4,6 +4,7 @@ import { storyStages, getLegendData } from './data/storyData';
 import AntiGravityCard from './components/AntiGravityCard';
 import ChoiceOrb from './components/ChoiceOrb';
 import DestinyOverlay from './components/DestinyOverlay';
+import TarotCard from './components/TarotCard';
 
 export default function App() {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
@@ -29,6 +30,11 @@ export default function App() {
 
     setDivergence(prev => prev + choice.points);
     setHistory(prev => [...prev, choice]);
+    
+    if (choice.isFatal) {
+      setLegendRevealed(true);
+      return;
+    }
     
     if (currentStageIndex < storyStages.length - 1) {
       setCurrentStageIndex(prev => prev + 1);
@@ -123,7 +129,7 @@ export default function App() {
                       className="text-xs uppercase tracking-[0.3em] mb-2 font-sans"
                       style={{ color: accentColor }}
                     >
-                      Stage {currentStageIndex + 1}
+                      Stage {currentStageIndex + 1}: {currentStage.stage}
                     </h2>
                     <h1 className="text-3xl md:text-5xl font-serif mb-6 text-slate-900 dark:text-white leading-tight">
                       {currentStage.title}
@@ -159,12 +165,21 @@ export default function App() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.5, duration: 1 }}
+                      className="flex flex-col items-center"
                     >
-                      <h2 className="text-sm uppercase tracking-widest text-slate-500 dark:text-white/50 mb-4">
+                      <h2 className="text-sm uppercase tracking-widest text-slate-500 dark:text-white/50 mb-6">
                         Your Personal Legend
                       </h2>
+                      
+                      <div className="mb-10 w-full flex justify-center">
+                        <TarotCard 
+                          image={getLegendData(divergence, history).image} 
+                          title={getLegendData(divergence, history).title} 
+                        />
+                      </div>
+
                       <h1 
-                        className="text-5xl md:text-7xl font-serif mb-8 drop-shadow-lg"
+                        className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 drop-shadow-lg text-center"
                         style={{ color: accentColor, textShadow: `0 0 20px ${accentColor}80` }}
                       >
                         {getLegendData(divergence, history).title}
@@ -172,7 +187,7 @@ export default function App() {
                     </motion.div>
                     
                     <motion.p 
-                      className="text-slate-700 dark:text-white/80 max-w-2xl mx-auto mb-14 font-light leading-relaxed text-sm md:text-base"
+                      className="text-slate-700 dark:text-white/80 max-w-2xl mx-auto mb-12 font-light leading-relaxed text-sm md:text-base px-4"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1.5, duration: 1 }}
