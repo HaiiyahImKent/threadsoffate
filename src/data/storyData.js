@@ -3,6 +3,7 @@ export const storyStages = [
     id: 1,
     stage: "Exposition",
     title: "The Shepherd's Dream",
+    image: "/stages/stage_1.png",
     description: "You wake in a ruined church in Andalusia. Starlight spills through the broken roof, and a sycamore grows where the sacristy once stood. Again, you dream of a child leading you to the Egyptian pyramids and a hidden treasure. The sheep breathe softly around you. Do you follow the dream or choose the comfort of the known?",
     choices: [
       {
@@ -48,6 +49,7 @@ export const storyStages = [
     id: 2,
     stage: "Rising Action",
     title: "The Crystal Merchant",
+    image: "/stages/stage_2.png",
     description: "You cross into Africa and lose everything in Tangier. With no money and no language, you work for a crystal merchant whose shop is fading. Your ideas revive the business, but the desert still calls to you.",
     choices: [
       {
@@ -91,6 +93,7 @@ export const storyStages = [
     id: 3,
     stage: "Climax",
     title: "The Al-Fayoum Oasis",
+    image: "/stages/stage_3.png",
     description: "The caravan halts at Al-Fayoum as tribal war spreads across the desert. You meet Fatima among the palms and feel your heart lock in place. A vision follows: an attack is coming to the neutral oasis.",
     choices: [
       {
@@ -134,6 +137,7 @@ export const storyStages = [
     id: 4,
     stage: "Falling Action",
     title: "The Alchemist & The Desert",
+    image: "/stages/stage_4.png",
     description: "You ride with the Alchemist into the deep desert toward the pyramids. Captured by a warring tribe, he claims you can transform into the wind. You have three days to prove it or you will both die.",
     choices: [
       {
@@ -179,6 +183,7 @@ export const storyStages = [
     id: 5,
     stage: "Resolution",
     title: "The Pyramids",
+    image: "/stages/stage_5.png",
     description: "You stand before the Pyramids. As you dig where your tears fell, refugees attack and steal your gold. Their leader laughs and tells you of his dream about a treasure buried under a sycamore in a ruined church in Spain.",
     choices: [
       {
@@ -222,6 +227,7 @@ export const storyStages = [
     id: 6,
     stage: "Denouement",
     title: "The Return to the Sycamore",
+    image: "/stages/stage_6.png",
     description: "You return to Andalusia and stand again in the ruined church. Beneath the sycamore, you uncover a chest of Spanish gold and stones. Your Personal Legend is fulfilled, but what will you do with the treasure and the wisdom?",
     choices: [
       {

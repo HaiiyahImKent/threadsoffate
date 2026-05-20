@@ -131,6 +131,19 @@ export default function App() {
                     >
                       Stage {currentStageIndex + 1}: {currentStage.stage}
                     </h2>
+                    {currentStage.image ? (
+                      <div className="mx-auto mb-8 max-w-2xl">
+                        <div className="relative overflow-hidden rounded-2xl border border-slate-300/40 dark:border-white/20 shadow-xl">
+                          <img
+                            src={currentStage.image}
+                            alt={currentStage.title}
+                            className="w-full h-56 sm:h-64 md:h-72 object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                        </div>
+                      </div>
+                    ) : null}
                     <h1 className="text-3xl md:text-5xl font-serif mb-6 text-slate-900 dark:text-white leading-tight">
                       {currentStage.title}
                     </h1>
